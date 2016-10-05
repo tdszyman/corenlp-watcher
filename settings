@@ -1,0 +1,2 @@
+export CORENLPW_WATCHDIR=/tmp/corenlpw
+export CORENLPW_CLASSPATH=/path/to/stanford-corenlp-full-2015-01-29

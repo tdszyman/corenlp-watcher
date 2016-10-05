@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Terrence Szymanski
+# 20 January 2016
+#
+# This script starts the Java process running the CoreNLP
+# pipeline. Certain environament variables are required to be set
+# before running this script: those variables can be found in the
+# settings file and can be loaded by running `source settings`. So, to
+# launch the CoreNLP process, you could do:
+#
+#   $ source settings
+#   $ ./corenlpw
+#
+
+if [ -z "$CORENLPW_CLASSPATH" ]; then
+    echo "The CORENLPW_CLASSPATH environment variable is not set. Please set this in order to proceed. (Try running 'source settings')."
+    exit;
+fi
+
+if [ -z "$CORENLPW_WATCHDIR" ]; then
+    echo "The CORENLPW_WATCHDIR environment variable is not set. Please set this in order to proceed. (Try running 'source settings')."
+    exit;
+fi
+
+if [ ! -f "$CORENLPW_WATCHDIR" ]; then
+    echo "Making directory $CORENLPW_WATCHDIR";
+    mkdir -p "$CORENLPW_WATCHDIR"
+    cp CoreNLP-to-HTML.xsl "$CORENLPW_WATCHDIR"
+fi
+
+exec java -classpath "${CORENLPW_CLASSPATH}/*:." CoreNLPWatcher "${CORENLPW_WATCHDIR}"
